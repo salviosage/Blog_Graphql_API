@@ -16,9 +16,9 @@
       return await User.find({ email: email }).then((response: any) => {
         if (response.length > 0) {
             if(!response.verified){
-                return { isUserLogged: true,isUserVerified:false, email: email };
+                return { isUserLogged: true,isUserVerified:false, user: response };
             }
-            return { isUserLogged: true,isUserVerified:true, email: email };
+            return { isUserLogged: true,isUserVerified:true, user: response};
         }
         return { isUserLogged: false };
       });
