@@ -8,11 +8,11 @@ import { createServer } from 'http';
 import compression from 'compression';
 import cors from 'cors';
 import schema from './graphql/schema';
-import { MongoHelper } from './helpers/mongoHelpers';
+import { connect} from './db';
+import {validateUser} from './helpers/auth.helper'
 
 const app = express();
-const mHelper = new MongoHelper();
-mHelper.initiateMongoConnection();
+connect()
 
 const server = new ApolloServer({
   schema,
@@ -20,7 +20,7 @@ const server = new ApolloServer({
   introspection: true,
   playground: true,
   context: async ({ req }) => {
-    return await mHelper.validateUser(req);
+    return await validateUser(req);
   },
 });
 
